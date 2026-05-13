@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Gestion Bibliothèque{% endblock %}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+            --pink-50:  #fdf2f8;
+            --pink-100: #fce7f3;
+            --pink-200: #fbcfe8;
+            --pink-300: #f9a8d4;
+            --pink-400: #f472b6;
+            --pink-500: #ec4899;
+            --pink-600: #db2777;
+            --pink-700: #be185d;
+            --pink-800: #9d174d;
+            --pink-900: #831843;
+
+            --rose-100: #ffe4e6;
+            --rose-200: #fecdd3;
+
+            --bg:      #fdf2f8;
+            --sidebar: #fce7f3;
+            --sidebar-border: #fbcfe8;
+            --white:   #ffffff;
+            --ink:     #831843;
+            --muted:   #be185d;
+            --border:  #fbcfe8;
+
+            --success-bg: #dcfce7; --success-text: #166534;
+            --warn-bg:    #fef3c7; --warn-text:    #92400e;
+            --danger-bg:  #fee2e2; --danger-text:  #991b1b;
+            --info-bg:    #fce7f3; --info-text:    #9d174d;
+
+            --radius:    12px;
+            --radius-lg: 16px;
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--bg);
+            color: var(--ink);
+            font-size: 14px;
+            line-height: 1.6;
+            min-height: 100vh;
+        }
+
+        /* ── Layout ── */
+        .app-layout {
+            display: grid;
+            grid-template-columns: 230px 1fr;
+            min-height: 100vh;
+        }
+
+        /* ── Sidebar ── */
+        .sidebar {
+            background: linear-gradient(180deg, #fce7f3 0%, #fdf2f8 100%);
+            border-right: 2px solid var(--sidebar-border);
+            display: flex;
+            flex-direction: column;
+            position: sticky;
+            top: 0;
+            height: 100vh;
+        }
+        .sidebar-logo {
+            padding: 1.5rem 1.25rem 1rem;
+            border-bottom: 1px solid var(--sidebar-border);
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+        }
+        .sidebar-logo .logo-mark {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: #fff;
+        }
+        .sidebar-logo .logo-mark span { color: #fce7f3; }
+        .sidebar-logo .logo-sub {
+            font-size: .62rem;
+            color: rgba(255,255,255,.8);
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            margin-top: 3px;
+        }
+        .sidebar-user {
+            padding: .9rem 1.25rem;
+            display: flex;
+            align-items: center;
+            gap: .65rem;
+            border-bottom: 1px solid var(--sidebar-border);
+            background: rgba(255,255,255,.5);
+        }
+        .user-avatar {
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #f472b6, #ec4899);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: .72rem; font-weight: 700;
+            flex-shrink: 0;
+            box-shadow: 0 2px 8px rgba(236,72,153,.3);
+        }
+        .user-name  { font-size: .82rem; font-weight: 600; color: var(--ink); }
+        .user-role  { font-size: .63rem; color: var(--muted); text-transform: uppercase; letter-spacing: .08em; }
+
+        .nav-group  { padding: .7rem 0; }
+        .nav-label  {
+            padding: .2rem 1.25rem;
+            font-size: .6rem;
+            color: var(--pink-400);
+            letter-spacing: .16em;
+            text-transform: uppercase;
+            margin-bottom: .2rem;
+            font-weight: 700;
+        }
+        .nav-item {
+            display: flex; align-items: center; gap: .6rem;
+            padding: .5rem 1.25rem;
+            color: var(--pink-700);
+            font-size: .82rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all .18s;
+            border-left: 3px solid transparent;
+            text-decoration: none;
+            margin: 2px 0;
+        }
+        .nav-item i { width: 16px; text-align: center; font-size: 13px; color: var(--pink-400); }
+        .nav-item:hover { color: var(--pink-600); background: rgba(244,114,182,.1); border-left-color: var(--pink-300); }
+        .nav-item.active {
+            color: var(--pink-700);
+            background: linear-gradient(90deg, rgba(244,114,182,.2), rgba(244,114,182,.05));
+            border-left-color: var(--pink-500);
+            font-weight: 700;
+        }
+        .nav-item.active i { color: var(--pink-500); }
+        .sidebar-bottom {
+            margin-top: auto;
+            padding: .9rem 1.25rem;
+            border-top: 1px solid var(--sidebar-border);
+        }
+        .logout-link {
+            display: flex; align-items: center; gap: .5rem;
+            color: var(--pink-600);
+            font-size: .8rem;
+            text-decoration: none;
+            padding: .4rem .7rem;
+            border-radius: 8px;
+            transition: all .15s;
+            font-weight: 500;
+        }
+        .logout-link:hover { background: var(--rose-100); color: var(--pink-800); }
+
+        /* ── Main ── */
+        .main-area { display: flex; flex-direction: column; min-height: 100vh; }
+
+        .topbar {
+            background: rgba(255,255,255,.95);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid var(--border);
+            padding: .9rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: sticky; top: 0; z-index: 10;
+            box-shadow: 0 1px 12px rgba(236,72,153,.08);
+        }
+        .breadcrumb {
+            display: flex; align-items: center; gap: .4rem;
+            font-size: .75rem; color: var(--muted); list-style: none;
+        }
+        .breadcrumb .sep { opacity: .4; }
+        .breadcrumb a { color: var(--muted); text-decoration: none; }
+        .breadcrumb a:hover { color: var(--pink-600); }
+        .breadcrumb li:last-child { color: var(--ink); font-weight: 600; }
+
+        .page-content { padding: 2rem; flex: 1; }
+
+        /* ── Page header ── */
+        .page-header {
+            margin-bottom: 1.75rem;
+            display: flex; align-items: flex-end; justify-content: space-between;
+        }
+        .page-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6rem;
+            font-weight: 400;
+            color: var(--ink);
+            line-height: 1.2;
+        }
+        .page-title em {
+            font-style: italic;
+            color: var(--pink-400);
+            font-size: .82rem;
+            display: block;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 500;
+            margin-bottom: .1rem;
+            letter-spacing: .02em;
+        }
+        .header-actions { display: flex; gap: .6rem; }
+
+        /* ── Buttons ── */
+        .btn {
+            display: inline-flex; align-items: center; gap: .4rem;
+            padding: .52rem 1.1rem;
+            border-radius: 20px;
+            font-size: .82rem; font-weight: 600;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all .18s;
+            text-decoration: none;
+            font-family: inherit;
+            line-height: 1;
+        }
+        .btn-primary { background: linear-gradient(135deg, #f472b6, #ec4899); color: #fff; border-color: transparent; box-shadow: 0 3px 12px rgba(236,72,153,.3); }
+        .btn-primary:hover { background: linear-gradient(135deg, #ec4899, #db2777); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(236,72,153,.4); }
+        .btn-outline  { background: var(--white); color: var(--pink-600); border-color: var(--pink-300); }
+        .btn-outline:hover { background: var(--pink-50); border-color: var(--pink-400); }
+        .btn-danger   { background: var(--danger-bg); color: var(--danger-text); border-color: #fecaca; border-radius: 20px; }
+        .btn-danger:hover { background: #fecaca; }
+        .btn-sm { padding: .32rem .75rem; font-size: .75rem; }
+
+        /* ── Cards ── */
+        .card { background: var(--white); border: 1px solid var(--border); border-radius: var(--radius-lg); box-shadow: 0 2px 16px rgba(236,72,153,.06); }
+        .card-body { padding: 1.25rem 1.5rem; }
+
+        /* ── Stats ── */
+        .stat-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; margin-bottom: 1.5rem; }
+        .stat-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: 1.2rem 1.4rem;
+            border-top: 4px solid var(--pink-300);
+            box-shadow: 0 2px 12px rgba(236,72,153,.08);
+        }
+        .stat-label { font-size: .64rem; text-transform: uppercase; letter-spacing: .1em; color: var(--pink-400); margin-bottom: .4rem; font-weight: 700; }
+        .stat-value { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 400; color: var(--ink); }
+        .stat-delta { font-size: .72rem; color: var(--success-text); margin-top: .2rem; }
+
+        /* ── Data table ── */
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            font-size: .64rem; font-weight: 700;
+            text-transform: uppercase; letter-spacing: .1em;
+            color: var(--pink-600);
+            padding: .7rem 1.25rem;
+            background: linear-gradient(135deg, var(--pink-50), #fff9fb);
+            border-bottom: 2px solid var(--pink-200);
+            text-align: left;
+        }
+        .data-table td {
+            padding: .88rem 1.25rem;
+            border-bottom: 1px solid var(--pink-100);
+            vertical-align: middle;
+            font-size: .84rem;
+        }
+        .data-table tr:last-child td { border-bottom: none; }
+        .data-table tbody tr:hover td { background: rgba(252,231,243,.4); }
+        .id-cell { font-family: monospace; font-size: .72rem; color: var(--pink-400); }
+
+        .badge-chip {
+            display: inline-flex; align-items: center; gap: .25rem;
+            padding: .2rem .6rem;
+            background: var(--pink-100);
+            border: 1px solid var(--pink-200);
+            border-radius: 20px;
+            font-size: .72rem; color: var(--pink-800);
+            font-weight: 600;
+        }
+        .action-group { display: flex; gap: .35rem; }
+        .action-link {
+            display: inline-flex; align-items: center; gap: .28rem;
+            padding: .3rem .65rem;
+            border-radius: 20px;
+            font-size: .74rem; font-weight: 600;
+            text-decoration: none;
+            transition: all .15s; cursor: pointer;
+            border: 1px solid transparent;
+        }
+        .action-link.view  { color: var(--pink-700); background: var(--pink-100); border-color: var(--pink-200); }
+        .action-link.view:hover  { background: var(--pink-200); }
+        .action-link.edit  { color: var(--warn-text); background: var(--warn-bg); border-color: #fde68a; }
+        .action-link.edit:hover  { background: #fde68a; }
+
+        /* ── Badges ── */
+        .badge {
+            display: inline-flex; align-items: center;
+            padding: .22rem .6rem;
+            border-radius: 20px;
+            font-size: .72rem; font-weight: 600;
+        }
+        .badge-en-cours  { background: var(--info-bg);    color: var(--info-text); }
+        .badge-en-retard { background: var(--warn-bg);    color: var(--warn-text); }
+        .badge-rendu     { background: var(--success-bg); color: var(--success-text); }
+        .badge-default   { background: var(--pink-100);   color: var(--muted); }
+
+        /* ── Detail table ── */
+        .detail-table { width: 100%; border-collapse: collapse; }
+        .detail-table th,
+        .detail-table td {
+            padding: .75rem 1.25rem;
+            font-size: .84rem;
+            border-bottom: 1px solid var(--pink-100);
+            vertical-align: middle;
+        }
+        .detail-table tr:last-child th,
+        .detail-table tr:last-child td { border-bottom: none; }
+        .detail-table th {
+            font-size: .68rem; text-transform: uppercase; letter-spacing: .09em;
+            color: var(--pink-500); font-weight: 700; width: 36%;
+            background: var(--pink-50);
+        }
+
+        /* ── Forms ── */
+        .form-group   { margin-bottom: 1.15rem; }
+        .form-label   { display: block; font-size: .77rem; font-weight: 600; color: var(--pink-700); margin-bottom: .35rem; }
+        .form-control, .form-select {
+            width: 100%;
+            padding: .55rem .9rem;
+            border: 2px solid var(--pink-200);
+            border-radius: var(--radius);
+            font-size: .84rem;
+            font-family: inherit;
+            color: var(--ink);
+            background: var(--white);
+            transition: border-color .15s, box-shadow .15s;
+            appearance: none;
+        }
+        .form-control:focus, .form-select:focus {
+            outline: none;
+            border-color: var(--pink-400);
+            box-shadow: 0 0 0 3px rgba(236,72,153,.15);
+        }
+        .form-error { font-size: .73rem; color: var(--danger-text); margin-top: .25rem; }
+
+        /* ── Auth layout ── */
+        .auth-layout {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #fce7f3 0%, #fdf2f8 50%, #fce7f3 100%);
+        }
+        .auth-card {
+            width: 420px;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 8px 40px rgba(236,72,153,.15);
+        }
+        .auth-header {
+            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            padding: 2rem;
+            text-align: center;
+        }
+        .auth-logo  { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 600; color: #fff; }
+        .auth-logo i { margin-right: .5rem; }
+        .auth-sub   { font-size: .73rem; color: rgba(255,255,255,.8); margin-top: .35rem; letter-spacing: .06em; }
+        .auth-body  { padding: 1.85rem; }
+        .auth-footer {
+            padding: .95rem 1.75rem;
+            background: var(--pink-50);
+            text-align: center;
+            font-size: .78rem;
+            color: var(--muted);
+            border-top: 1px solid var(--border);
+        }
+        .auth-footer a { color: var(--pink-600); text-decoration: none; font-weight: 600; }
+        .auth-footer a:hover { text-decoration: underline; }
+
+        /* ── Alert ── */
+        .alert { padding: .88rem 1.15rem; border-radius: var(--radius); font-size: .84rem; margin-bottom: 1rem; border: 1px solid transparent; }
+        .alert-info    { background: var(--info-bg);    color: var(--info-text);    border-color: var(--pink-200); }
+        .alert-danger  { background: var(--danger-bg);  color: var(--danger-text);  border-color: #fecaca; }
+        .alert-success { background: var(--success-bg); color: var(--success-text); border-color: #bbf7d0; }
+
+        /* ── Danger zone ── */
+        .danger-zone { border-color: #fecaca !important; }
+        .danger-zone-label {
+            font-size: .64rem; text-transform: uppercase; letter-spacing: .12em;
+            color: var(--danger-text); font-weight: 700; margin-bottom: .5rem;
+        }
+
+        /* ── Empty state ── */
+        .empty-row td {
+            text-align: center;
+            padding: 2.5rem;
+            color: var(--pink-300);
+            font-size: .86rem;
+        }
+        .empty-row i { font-size: 1.8rem; display: block; margin-bottom: .6rem; opacity: .5; color: var(--pink-300); }
+
+        /* ── Scrollbar ── */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: var(--pink-50); }
+        ::-webkit-scrollbar-thumb { background: var(--pink-300); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb:hover { background: var(--pink-400); }
+    </style>
+    {% block stylesheets %}{% endblock %}
+</head>
+<body>
+
+{% set current_route = app.request.attributes.get('_route') %}
+
+<div class="app-layout">
+
+    {# ── Sidebar ── #}
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <div class="logo-mark">Biblio<span>thèque</span></div>
+            <div class="logo-sub">Gestion des emprunts</div>
+        </div>
+
+        {% if app.user %}
+        <div class="sidebar-user">
+            <div class="user-avatar">
+                {{ app.user.userIdentifier|first|upper }}
+            </div>
+            <div>
+                <div class="user-name">{{ app.user.userIdentifier }}</div>
+                <div class="user-role">
+                    {% if is_granted('ROLE_ADMIN') %}Administrateur
+                    {% elseif is_granted('ROLE_BIBLIOTHECAIRE') %}Bibliothécaire
+                    {% elseif is_granted('ROLE_ADHERENT') %}Adhérent
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        {% endif %}
+
+        <nav>
+            {% if is_granted('ROLE_ADMIN') %}
+            <div class="nav-group">
+                <div class="nav-label">Administration</div>
+                <a href="/adherent" class="nav-item {% if 'app_adherent' in current_route %}active{% endif %}">
+                    <i class="fas fa-users"></i> Adhérents
+                </a>
+                <a href="/bibliothecaire" class="nav-item {% if 'app_bibliothecaire' in current_route %}active{% endif %}">
+                    <i class="fas fa-user-tie"></i> Bibliothécaires
+                </a>
+                <a href="/emprunt" class="nav-item {% if 'app_emprunt' in current_route %}active{% endif %}">
+                    <i class="fas fa-book"></i> Emprunts
+                </a>
+            </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_BIBLIOTHECAIRE') %}
+            <div class="nav-group">
+                <div class="nav-label">Mon espace</div>
+                <a href="/dashboard/bibliothecaire" class="nav-item {% if current_route == 'dashboard_bibliothecaire' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                </a>
+            </div>
+            {% endif %}
+
+            {% if is_granted('ROLE_ADHERENT') %}
+            <div class="nav-group">
+                <div class="nav-label">Mon espace</div>
+                <a href="/dashboard/adherent" class="nav-item {% if current_route == 'dashboard_adherent' %}active{% endif %}">
+                    <i class="fas fa-tachometer-alt"></i> Tableau de bord
+                </a>
+            </div>
+            {% endif %}
+        </nav>
+
+        <div class="sidebar-bottom">
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}" class="logout-link">
+                    <i class="fas fa-sign-out-alt"></i> Déconnexion
+                </a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="logout-link">
+                    <i class="fas fa-sign-in-alt"></i> Connexion
+                </a>
+            {% endif %}
+        </div>
+    </aside>
+
+    {# ── Main ── #}
+    <div class="main-area">
+        <header class="topbar">
+            <ul class="breadcrumb">
+                <li><a href="#"><i class="fas fa-home"></i></a></li>
+                {% block breadcrumb %}{% endblock %}
+            </ul>
+            <div class="header-actions">
+                {% block topbar_actions %}{% endblock %}
+            </div>
+        </header>
+
+        <main class="page-content">
+            {% block body %}{% endblock %}
+        </main>
+    </div>
+
+</div>
+
+{% block javascripts %}{% endblock %}
+</body>
+</html>

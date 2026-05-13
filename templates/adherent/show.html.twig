@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails Adhérent{% endblock %}
+
+{% block breadcrumb %}
+    <li class="sep">/</li>
+    <li>Administration</li>
+    <li class="sep">/</li>
+    <li><a href="{{ path('app_adherent_index') }}">Adhérents</a></li>
+    <li class="sep">/</li>
+    <li>Détails</li>
+{% endblock %}
+
+{% block topbar_actions %}
+    <a href="{{ path('app_adherent_edit', {'id': adherent.id}) }}" class="btn btn-outline btn-sm">
+        <i class="fas fa-edit"></i> Modifier
+    </a>
+{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1 class="page-title">
+            <em>Fiche membre</em>
+            {{ adherent.nom }} {{ adherent.prenom }} 🌸
+        </h1>
+    </div>
+
+    <div class="card">
+        <div class="card-body">
+            <table class="detail-table">
+                <tbody>
+                    <tr>
+                        <th>ID Interne</th>
+                        <td class="id-cell">#{{ adherent.id }}</td>
+                    </tr>
+                    <tr>
+                        <th>Numéro CIN</th>
+                        <td><span class="badge-chip">{{ adherent.cin }}</span></td>
+                    </tr>
+                    <tr>
+                        <th>Nom de famille</th>
+                        <td style="font-weight: 600;">{{ adherent.nom|upper }}</td>
+                    </tr>
+                    <tr>
+                        <th>Prénom</th>
+                        <td>{{ adherent.prenom }}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border); display: flex; gap: 1rem;">
+                {{ include('adherent/_delete_form.html.twig') }}
+                <a href="{{ path('app_adherent_index') }}" class="btn btn-outline">Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

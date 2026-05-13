@@ -1,0 +1,26 @@
+<div class="card">
+    <div class="card-body">
+        {{ form_start(form) }}
+            {% for field in form %}
+                {% if field.vars.name != '_token' %}
+                    <div class="form-group">
+                        {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                        <div class="form-error">
+                            {{ form_errors(field) }}
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+
+            <div style="margin-top: 1.5rem; display: flex; gap: 1rem;">
+                <button class="btn btn-primary">
+                    <i class="fas fa-save"></i> {{ button_label|default('Enregistrer') }}
+                </button>
+                <a href="{{ path(app.request.attributes.get('_route')|replace({'_new': '_index', '_edit': '_index'})) }}" class="btn btn-outline">
+                    Annuler
+                </a>
+            </div>
+        {{ form_end(form) }}
+    </div>
+</div>

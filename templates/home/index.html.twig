@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Accueil - Bibliothèque{% endblock %}
+
+{% block body %}
+    <div class="page-header">
+        <h1 class="page-title">
+            <em>Plateforme de gestion</em>
+            Bienvenue chez Bibliothèque
+        </h1>
+    </div>
+
+    <div class="card" style="overflow: hidden;">
+        <div style="background: linear-gradient(135deg, #f472b6, #ec4899); padding: 3rem; text-align: center; color: #fff;">
+            <i class="fas fa-book-open" style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.9;"></i>
+            <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 1rem;">La gestion de vos livres, simplifiée.</h2>
+        </div>
+        
+        <div class="card-body" style="padding: 3rem;">
+            <div class="stat-grid">
+                <div class="stat-card">
+                    <div class="stat-label">Pour les Adhérents</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Consultez vos livres empruntés et vos pénalités en un clic.</p>
+                    <a href="{{ path('dashboard_adherent') }}" class="btn btn-outline btn-sm">Mon Espace</a>
+                </div>
+                <div class="stat-card" style="border-top-color: var(--pink-500)">
+                    <div class="stat-label">Pour les Bibliothécaires</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Gérez les retours et validez les nouveaux emprunts facilement.</p>
+                    <a href="{{ path('dashboard_bibliothecaire') }}" class="btn btn-primary btn-sm">Tableau de Bord</a>
+                </div>
+                <div class="stat-card" style="border-top-color: var(--pink-700)">
+                    <div class="stat-label">Administration</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Contrôle total sur les membres et les rôles de sécurité.</p>
+                    <a href="{{ path('app_adherent_index') }}" class="btn btn-outline btn-sm">Gérer</a>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
