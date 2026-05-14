@@ -5,13 +5,13 @@
 {% block body %}
     <div class="page-header">
         <h1 class="page-title">
-            <em>Plateforme de gestion</em>
-            Bienvenue chez Bibliothèque
+            <em>Espace Bibliothèque Universitaire</em>
+            Bienvenue à la Bibliothèque de l'Université
         </h1>
     </div>
 
     <div class="card" style="overflow: hidden;">
-        <div style="background: linear-gradient(135deg, #f472b6, #ec4899); padding: 3rem; text-align: center; color: #fff;">
+        <div style="background: #ec4899; padding: 3rem; text-align: center; color: #fff;">
             <i class="fas fa-book-open" style="font-size: 4rem; margin-bottom: 1.5rem; opacity: 0.9;"></i>
             <h2 style="font-family: 'Playfair Display', serif; font-size: 2.2rem; margin-bottom: 1rem;">La gestion de vos livres, simplifiée.</h2>
         </div>
@@ -19,19 +19,21 @@
         <div class="card-body" style="padding: 3rem;">
             <div class="stat-grid">
                 <div class="stat-card">
-                    <div class="stat-label">Pour les Adhérents</div>
-                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Consultez vos livres empruntés et vos pénalités en un clic.</p>
-                    <a href="{{ path('dashboard_adherent') }}" class="btn btn-outline btn-sm">Mon Espace</a>
+                    <div class="stat-label">Pour les Étudiants</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Accédez à vos emprunts en cours, consultez vos dates de retour et gérez vos pénalités de retard.</p>
+                    <div style="font-size: 0.7rem; color: var(--pink-400); margin-bottom: 0.5rem;"><i class="fas fa-info-circle"></i> Utilisez votre numéro de carte étudiant (CIN).</div>
+                    <a href="{{ path('dashboard_adherent') }}" class="btn btn-outline btn-sm">Mon Espace Étudiant</a>
                 </div>
                 <div class="stat-card" style="border-top-color: var(--pink-500)">
-                    <div class="stat-label">Pour les Bibliothécaires</div>
-                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Gérez les retours et validez les nouveaux emprunts facilement.</p>
+                    <div class="stat-label">Personnel & Bibliothécaires</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Gérez le catalogue, validez les retours et suivez l'activité de la bibliothèque universitaire.</p>
+                    <div style="font-size: 0.7rem; color: var(--pink-400); margin-bottom: 0.5rem;"><i class="fas fa-key"></i> Accès réservé avec votre matricule professionnel.</div>
                     <a href="{{ path('dashboard_bibliothecaire') }}" class="btn btn-primary btn-sm">Tableau de Bord</a>
                 </div>
                 <div class="stat-card" style="border-top-color: var(--pink-700)">
-                    <div class="stat-label">Administration</div>
-                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Contrôle total sur les membres et les rôles de sécurité.</p>
-                    <a href="{{ path('app_adherent_index') }}" class="btn btn-outline btn-sm">Gérer</a>
+                    <div class="stat-label">Administration Centrale</div>
+                    <p style="font-size: 0.85rem; color: var(--muted); margin-bottom: 1rem;">Supervision globale des membres, des rôles et de la configuration du système.</p>
+                    <a href="{{ path('app_adherent_index') }}" class="btn btn-outline btn-sm">Configuration</a>
                 </div>
             </div>
         </div>

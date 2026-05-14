@@ -15,8 +15,8 @@
     <div class="page-header">
         <h1 class="page-title">
             <em>Formulaire d'inscription</em>
-            Nouvel Adhérent 🌸
-        </h1>
+            {{ adherent.nom }} {{ adherent.prenom }}
+      </h1>
     </div>
 
     {{ include('adherent/_form.html.twig') }}

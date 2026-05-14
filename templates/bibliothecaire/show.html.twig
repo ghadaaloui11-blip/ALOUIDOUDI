@@ -1,34 +1,66 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Bibliothecaire{% endblock %}
+{% block title %}Profil Bibliothécaire{% endblock %}
+
+{% block breadcrumb %}
+    <li class="sep">/</li>
+    <li>Personnel</li>
+    <li class="sep">/</li>
+    <li>Détails</li>
+{% endblock %}
 
 {% block body %}
-    <h1>Bibliothecaire</h1>
+    <div class="page-header">
+        <h1 class="page-title">
+            <em>Fiche Personnel</em>
+            {{ bibliothecaire.nom }} {{ bibliothecaire.prenom }}
+        </h1>
+    </div>
 
-    <table class="table">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ bibliothecaire.id }}</td>
-            </tr>
-            <tr>
-                <th>Matricule</th>
-                <td>{{ bibliothecaire.matricule }}</td>
-            </tr>
-            <tr>
-                <th>Nom</th>
-                <td>{{ bibliothecaire.nom }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ bibliothecaire.prenom }}</td>
-            </tr>
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                <div class="info-group">
+                    <label class="info-label">Matricule</label>
+                    <div class="info-value"><span class="badge-chip">{{ bibliothecaire.matricule }}</span></div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Spécialité</label>
+                    <div class="info-value">{{ bibliothecaire.specialite|default('Non spécifiée') }}</div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Grade</label>
+                    <div class="info-value">{{ bibliothecaire.grade|default('Non renseigné') }}</div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Bureau / Étage</label>
+                    <div class="info-value">{{ bibliothecaire.bureau|default('Non renseigné') }}</div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Date d'embauche</label>
+                    <div class="info-value">{{ bibliothecaire.dateEmbauche ? bibliothecaire.dateEmbauche|date('d/m/Y') : 'Non renseignée' }}</div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Téléphone</label>
+                    <div class="info-value">{{ bibliothecaire.telephone|default('Non renseigné') }}</div>
+                </div>
+                <div class="info-group">
+                    <label class="info-label">Compte Utilisateur</label>
+                    <div class="info-value">{{ bibliothecaire.user ? bibliothecaire.user.email : 'Aucun compte lié' }}</div>
+                </div>
+            </div>
 
-    <a href="{{ path('app_bibliothecaire_index') }}">back to list</a>
-
-    <a href="{{ path('app_bibliothecaire_edit', {'id': bibliothecaire.id}) }}">edit</a>
-
-    {{ include('bibliothecaire/_delete_form.html.twig') }}
+            <div style="margin-top: 2rem; display: flex; gap: 1rem; border-top: 1px solid var(--border); padding-top: 2rem;">
+                <a href="{{ path('app_bibliothecaire_edit', {'id': bibliothecaire.id}) }}" class="btn btn-primary">
+                    <i class="fas fa-edit"></i> Modifier
+                </a>
+                <a href="{{ path('app_bibliothecaire_index') }}" class="btn btn-outline">
+                    Retour à la liste
+                </a>
+                <div style="margin-left: auto;">
+                    {{ include('bibliothecaire/_delete_form.html.twig') }}
+                </div>
+            </div>
+        </div>
+    </div>
 {% endblock %}

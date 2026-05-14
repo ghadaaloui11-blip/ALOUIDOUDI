@@ -26,6 +26,21 @@ class Bibliothecaire
     #[ORM\JoinColumn(nullable: true)]
     private ?User $user = null;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $specialite = null;
+
+    #[ORM\Column(length: 20, nullable: true)]
+    private ?string $telephone = null;
+
+    #[ORM\Column(type: 'date', nullable: true)]
+    private ?\DateTimeInterface $dateEmbauche = null;
+
+    #[ORM\Column(length: 50, nullable: true)]
+    private ?string $bureau = null;
+
+    #[ORM\Column(length: 100, nullable: true)]
+    private ?string $grade = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -39,6 +54,7 @@ class Bibliothecaire
     public function setMatricule(int $matricule): static
     {
         $this->matricule = $matricule;
+
         return $this;
     }
 
@@ -50,6 +66,7 @@ class Bibliothecaire
     public function setNom(string $nom): static
     {
         $this->nom = $nom;
+
         return $this;
     }
 
@@ -61,6 +78,67 @@ class Bibliothecaire
     public function setPrenom(string $prenom): static
     {
         $this->prenom = $prenom;
+
+        return $this;
+    }
+
+    public function getSpecialite(): ?string
+    {
+        return $this->specialite;
+    }
+
+    public function setSpecialite(?string $specialite): static
+    {
+        $this->specialite = $specialite;
+
+        return $this;
+    }
+
+    public function getTelephone(): ?string
+    {
+        return $this->telephone;
+    }
+
+    public function setTelephone(?string $telephone): static
+    {
+        $this->telephone = $telephone;
+
+        return $this;
+    }
+
+    public function getDateEmbauche(): ?\DateTimeInterface
+    {
+        return $this->dateEmbauche;
+    }
+
+    public function setDateEmbauche(?\DateTimeInterface $dateEmbauche): static
+    {
+        $this->dateEmbauche = $dateEmbauche;
+
+        return $this;
+    }
+
+    public function getBureau(): ?string
+    {
+        return $this->bureau;
+    }
+
+    public function setBureau(?string $bureau): static
+    {
+        $this->bureau = $bureau;
+
+        return $this;
+    }
+
+    public function getGrade(): ?string
+    {
+        return $this->grade;
+    }
+
+    public function setGrade(?string $grade): static
+    {
+        $this->grade = $grade;
+
         return $this;
     }
 

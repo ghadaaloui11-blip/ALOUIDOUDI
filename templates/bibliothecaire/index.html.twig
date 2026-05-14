@@ -19,7 +19,7 @@
     <div class="page-header">
         <h1 class="page-title">
             <em>Équipe de gestion</em>
-            Gestion des Bibliothécaires 🌸
+            Gestion des Bibliothécaires
         </h1>
     </div>
 
@@ -32,6 +32,8 @@
                         <th>Matricule</th>
                         <th>Nom</th>
                         <th>Prénom</th>
+                        <th>Spécialité</th>
+                        <th>Téléphone</th>
                         <th style="text-align: right;">Actions</th>
                     </tr>
                 </thead>
@@ -42,6 +44,8 @@
                         <td><span class="badge-chip">{{ bibliothecaire.matricule }}</span></td>
                         <td style="font-weight: 600;">{{ bibliothecaire.nom|upper }}</td>
                         <td>{{ bibliothecaire.prenom }}</td>
+                        <td>{{ bibliothecaire.specialite }}</td>
+                        <td>{{ bibliothecaire.telephone }}</td>
                         <td>
                             <div class="action-group" style="justify-content: flex-end;">
                                 <a href="{{ path('app_bibliothecaire_show', {'id': bibliothecaire.id}) }}" class="action-link view">

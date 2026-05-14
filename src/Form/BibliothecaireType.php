@@ -17,6 +17,15 @@ class BibliothecaireType extends AbstractType
             ->add('matricule', IntegerType::class, ['label' => 'Matricule'])
             ->add('nom', TextType::class, ['label' => 'Nom'])
             ->add('prenom', TextType::class, ['label' => 'Prénom'])
+            ->add('specialite', TextType::class, ['label' => 'Spécialité', 'required' => false])
+            ->add('telephone', TextType::class, ['label' => 'Téléphone', 'required' => false])
+            ->add('dateEmbauche', \Symfony\Component\Form\Extension\Core\Type\DateType::class, [
+                'label' => 'Date d\'embauche',
+                'widget' => 'single_text',
+                'required' => false
+            ])
+            ->add('bureau', TextType::class, ['label' => 'Bureau / Étage', 'required' => false])
+            ->add('grade', TextType::class, ['label' => 'Grade / Titre', 'required' => false])
         ;
     }
 

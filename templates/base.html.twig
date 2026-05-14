@@ -25,18 +25,24 @@
             --rose-100: #ffe4e6;
             --rose-200: #fecdd3;
 
+            --blue-50:   #eff6ff;
+            --blue-100:  #dbeafe;
+            --blue-500:  #3b82f6;
+            --blue-600:  #2563eb;
+            --blue-700:  #1d4ed8;
+
             --bg:      #fdf2f8;
             --sidebar: #fce7f3;
             --sidebar-border: #fbcfe8;
             --white:   #ffffff;
-            --ink:     #831843;
-            --muted:   #be185d;
-            --border:  #fbcfe8;
+            --ink:     #1e3a8a; /* Dark blue ink */
+            --muted:   #64748b;
+            --border:  #e2e8f0;
 
             --success-bg: #dcfce7; --success-text: #166534;
             --warn-bg:    #fef3c7; --warn-text:    #92400e;
             --danger-bg:  #fee2e2; --danger-text:  #991b1b;
-            --info-bg:    #fce7f3; --info-text:    #9d174d;
+            --info-bg:    #dbeafe; --info-text:    #1e40af; /* Blue info */
 
             --radius:    12px;
             --radius-lg: 16px;
@@ -71,7 +77,7 @@
         .sidebar-logo {
             padding: 1.5rem 1.25rem 1rem;
             border-bottom: 1px solid var(--sidebar-border);
-            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            background: #ec4899;
         }
         .sidebar-logo .logo-mark {
             font-family: 'Playfair Display', serif;
@@ -98,7 +104,7 @@
         .user-avatar {
             width: 34px; height: 34px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #f472b6, #ec4899);
+            background: #ec4899;
             color: #fff;
             display: flex; align-items: center; justify-content: center;
             font-size: .72rem; font-weight: 700;
@@ -218,8 +224,8 @@
             font-family: inherit;
             line-height: 1;
         }
-        .btn-primary { background: linear-gradient(135deg, #f472b6, #ec4899); color: #fff; border-color: transparent; box-shadow: 0 3px 12px rgba(236,72,153,.3); }
-        .btn-primary:hover { background: linear-gradient(135deg, #ec4899, #db2777); transform: translateY(-1px); box-shadow: 0 5px 16px rgba(236,72,153,.4); }
+        .btn-primary { background: #ec4899; color: #fff; border-color: transparent; box-shadow: 0 3px 12px rgba(236,72,153,.3); }
+        .btn-primary:hover { background: #db2777; transform: translateY(-1px); box-shadow: 0 5px 16px rgba(236,72,153,.4); }
         .btn-outline  { background: var(--white); color: var(--pink-600); border-color: var(--pink-300); }
         .btn-outline:hover { background: var(--pink-50); border-color: var(--pink-400); }
         .btn-danger   { background: var(--danger-bg); color: var(--danger-text); border-color: #fecaca; border-radius: 20px; }
@@ -355,7 +361,7 @@
             box-shadow: 0 8px 40px rgba(236,72,153,.15);
         }
         .auth-header {
-            background: linear-gradient(135deg, #f472b6 0%, #ec4899 100%);
+            background: #ec4899;
             padding: 2rem;
             text-align: center;
         }
@@ -434,38 +440,38 @@
         </div>
         {% endif %}
 
-        <nav>
+        <nav class="sidebar-nav">
+            {% if app.user %}
+                {% if app.user.adherent %}
+                    <div class="nav-group">
+                        <div class="nav-label">Mon espace</div>
+                        <a href="{{ path('dashboard_adherent') }}" class="nav-item {{ current_route == 'dashboard_adherent' ? 'active' : '' }}">
+                            <i class="fas fa-user-graduate"></i> Étudiant
+                        </a>
+                    </div>
+                {% elseif app.user.bibliothecaire %}
+                    <div class="nav-group">
+                        <div class="nav-label">Mon espace</div>
+                        <a href="{{ path('dashboard_bibliothecaire') }}" class="nav-item {{ current_route == 'dashboard_bibliothecaire' ? 'active' : '' }}">
+                            <i class="fas fa-chalkboard-teacher"></i> Personnel
+                        </a>
+                    </div>
+                {% endif %}
+            {% endif %}
+
             {% if is_granted('ROLE_ADMIN') %}
-            <div class="nav-group">
-                <div class="nav-label">Administration</div>
-                <a href="/adherent" class="nav-item {% if 'app_adherent' in current_route %}active{% endif %}">
-                    <i class="fas fa-users"></i> Adhérents
-                </a>
-                <a href="/bibliothecaire" class="nav-item {% if 'app_bibliothecaire' in current_route %}active{% endif %}">
-                    <i class="fas fa-user-tie"></i> Bibliothécaires
-                </a>
-                <a href="/emprunt" class="nav-item {% if 'app_emprunt' in current_route %}active{% endif %}">
-                    <i class="fas fa-book"></i> Emprunts
-                </a>
-            </div>
-            {% endif %}
-
-            {% if is_granted('ROLE_BIBLIOTHECAIRE') %}
-            <div class="nav-group">
-                <div class="nav-label">Mon espace</div>
-                <a href="/dashboard/bibliothecaire" class="nav-item {% if current_route == 'dashboard_bibliothecaire' %}active{% endif %}">
-                    <i class="fas fa-tachometer-alt"></i> Tableau de bord
-                </a>
-            </div>
-            {% endif %}
-
-            {% if is_granted('ROLE_ADHERENT') %}
-            <div class="nav-group">
-                <div class="nav-label">Mon espace</div>
-                <a href="/dashboard/adherent" class="nav-item {% if current_route == 'dashboard_adherent' %}active{% endif %}">
-                    <i class="fas fa-tachometer-alt"></i> Tableau de bord
-                </a>
-            </div>
+                <div class="nav-group">
+                    <div class="nav-label">Administration</div>
+                    <a href="{{ path('app_adherent_index') }}" class="nav-item {{ 'app_adherent' in current_route ? 'active' : '' }}">
+                        <i class="fas fa-users"></i> Gestion Étudiants
+                    </a>
+                    <a href="{{ path('app_bibliothecaire_index') }}" class="nav-item {{ 'app_bibliothecaire' in current_route ? 'active' : '' }}">
+                        <i class="fas fa-user-tie"></i> Gestion Personnel
+                    </a>
+                    <a href="{{ path('app_emprunt_index') }}" class="nav-item {{ 'app_emprunt' in current_route ? 'active' : '' }}">
+                        <i class="fas fa-book-reader"></i> Gestion Emprunts
+                    </a>
+                </div>
             {% endif %}
         </nav>
 

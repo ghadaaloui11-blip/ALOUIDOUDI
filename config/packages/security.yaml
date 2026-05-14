@@ -30,9 +30,9 @@ security:
   access_control:
     - { path: ^/register, roles: PUBLIC_ACCESS }
     - { path: ^/login, roles: PUBLIC_ACCESS }
-    - { path: ^/adherent, roles: ROLE_ADMIN }
+    - { path: ^/adherent, roles: [ROLE_ADMIN, ROLE_BIBLIOTHECAIRE] }
     - { path: ^/bibliothecaire, roles: ROLE_ADMIN }
-    - { path: ^/emprunt, roles: ROLE_ADMIN }
+    - { path: ^/emprunt, roles: [ROLE_ADMIN, ROLE_BIBLIOTHECAIRE] } # Allow staff to manage loans too
     - { path: ^/dashboard/bibliothecaire, roles: ROLE_BIBLIOTHECAIRE }
     - { path: ^/dashboard/adherent, roles: ROLE_ADHERENT }
     - { path: ^/admin, roles: ROLE_ADMIN }
