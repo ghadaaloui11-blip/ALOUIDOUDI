@@ -31,13 +31,14 @@
                     {% set total_penalite = total_penalite + e.penalite %}
                 {% endif %}
             {% endfor %}
+            <div class="auth-sub">Accès réservé aux étudiants et au personnel de l'université</div>
             <div class="stat-value">{{ total_penalite }} €</div>
             <div class="stat-delta" style="color: var(--danger-text)">À régler à la bibliothèque</div>
         </div>
     </div>
 
     <div class="alert alert-info">
-        <i class="fas fa-info-circle"></i> <strong>Note pour les étudiants :</strong> Pensez à rendre vos ouvrages avant la date limite pour éviter les pénalités de retard. En cas de perte, veuillez contacter le personnel immédiatement.
+        <strong>Note pour les étudiants :</strong> Pensez à rendre vos ouvrages avant la date limite pour éviter les pénalités de retard. En cas de perte, veuillez contacter le personnel immédiatement.
     </div>
 
     <div class="card">
